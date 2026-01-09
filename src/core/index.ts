@@ -134,13 +134,23 @@ rl.on("line", (line) => {
 // HELPERS
 // --------------------
 function processVariableLine(line: string) {
-  if (!line.includes("=")) return;
-  const [key, ...rest] = line.split("=");
-  const value = rest.join("=").trim();
-  if (key && value !== undefined) {
-    variables[key.trim()] = value;
+  const trimmed = line.trim();
+  if (trimmed === "") return;
+
+  const varPattern = /^[A-Za-z_][A-Za-z0-9_]*=.*$/;
+
+  if (!varPattern.test(trimmed)) {
+    console.log(chalk.red(`Invalid variable format: "${line}". Use VAR=value format.`));
+    return; // kaydetme
   }
+
+  const [key, ...rest] = trimmed.split("=");
+  const value = rest.join("=").trim();
+
+  variables[key.trim()] = value;
+  console.log(chalk.green(`Variable "${key.trim()}" set to "${value}"`));
 }
+
 
 function showCommandPrompt() {
   console.log("\n--- COMMAND MODE ---");
