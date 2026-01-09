@@ -1,3 +1,5 @@
+import chalk from "chalk";
+
 export function replaceTemplate(
   template: string,
   variables: Record<string, string>
@@ -5,9 +7,10 @@ export function replaceTemplate(
   let result = template;
 
   for (const [key, value] of Object.entries(variables)) {
-    // {var} [var] formats
+    // {var} veya [var] şeklinde placeholder
     const pattern = new RegExp(`[{\\[]\\s*${key}\\s*[}\\]]`, "g");
-    result = result.replace(pattern, value);
+    // Değişken değeri yeşil renkte
+    result = result.replace(pattern, chalk.green(value));
   }
 
   return result;
