@@ -5,7 +5,8 @@ export function replaceTemplate(
   let result = template;
 
   for (const [key, value] of Object.entries(variables)) {
-    const pattern = new RegExp(`{{\\s*${key}\\s*}}`, "g");
+    // {var} [var] formats
+    const pattern = new RegExp(`[{\\[]\\s*${key}\\s*[}\\]]`, "g");
     result = result.replace(pattern, value);
   }
 

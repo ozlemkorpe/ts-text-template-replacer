@@ -14,7 +14,7 @@ let emptyCount = 0;
 const variables: Record<string, string> = {};
 let templateLines: string[] = [];
 
-console.log("Welcome to ts-text-replacer CLI!");
+console.log("Welcome to Text Replacer CLI!");
 console.log("Enter variables as key=value format.");
 console.log("Press Enter twice to finish variable input.\n");
 
@@ -33,7 +33,7 @@ rl.on("line", (line) => {
       state = "command";
       emptyCount = 0;
       console.log("\n--- COMMAND MODE ---");
-      console.log("Enter command: VAR / TXT / EXIT\n");
+      console.log("Enter command: VAR / TXT / EXIT / HELP / CLEAR\n");
       return;
     }
 
@@ -41,29 +41,49 @@ rl.on("line", (line) => {
     return;
   }
 
-  // --------------------
+ // --------------------
 // COMMAND MODE
 // --------------------
 if (state === "command") {
   const cmd = line.trim().toUpperCase();
 
-  if (cmd === "VAR") {
-    state = "var_input";
-    console.log("\nEnter variables (key=value). Press Enter twice when done.");
-  } else if (cmd === "TXT") {
-    state = "template_input";
-    templateLines = [];
-    console.log("\nEnter template. Press Enter twice when done.");
-  } else if (cmd === "EXIT") {
-    console.log("Exiting...");
-    rl.close();
-  } else if (cmd !== "") {
-    console.log("Unknown command. Use VAR / TXT / EXIT");
+  switch (cmd) {
+    case "VAR":
+      state = "var_input";
+      emptyCount = 0;
+      console.log("\nEnter variables (key=value). Press Enter twice when done.");
+      break;
+    case "TXT":
+      state = "template_input";
+      templateLines = [];
+      emptyCount = 0;
+      console.log("\nEnter template. Press Enter twice when done.");
+      break;
+    case "HELP":
+      console.log("\nAvailable Commands:\n");
+      console.log("VAR   - Adds new variables or overwrites existing ones. Variables are stored in the current session and can be used in subsequent templates.");
+      console.log("TXT   - Allows you to input a multi-line template using {variable_name} or [variable_name] placeholders. After pressing Enter twice, the tool performs replacement using current session variables and outputs the result.");
+      console.log("CLEAR - Clears the terminal screen and returns to command prompt.");
+      console.log("EXIT  - Terminates the application gracefully, preserving session data only during runtime.");
+      console.log("HELP  - Displays this list of available commands and their descriptions.\n");
+      break;
+    case "CLEAR":
+      console.clear();
+      console.log("--- COMMAND MODE ---");
+      console.log("Enter command: VAR / TXT / EXIT / HELP / CLEAR\n");
+      break;
+    case "EXIT":
+      console.log("Exiting...");
+      rl.close();
+      break;
+    default:
+      if (cmd !== "") console.log("Unknown command. Use VAR / TXT / EXIT / HELP / CLEAR");
+      break;
   }
 
-  emptyCount = 0; // reset for variable/template multi-line input
   return;
 }
+
 
 
   // --------------------
@@ -74,7 +94,7 @@ if (state === "command") {
       state = "command";
       emptyCount = 0;
       console.log("\n--- COMMAND MODE ---");
-      console.log("Enter command: VAR / TXT / EXIT\n");
+      console.log("Enter command: VAR / TXT / EXIT / HELP / CLEAR\n");
       return;
     }
 
@@ -96,7 +116,7 @@ if (state === "command") {
       console.log("\n--- OUTPUT ---\n");
       console.log(result);
       console.log("\n--- COMMAND MODE ---");
-      console.log("Enter command: VAR / TXT / EXIT\n");
+      console.log("Enter command: VAR / TXT / EXIT / HELP / CLEAR\n");
       return;
     }
 
