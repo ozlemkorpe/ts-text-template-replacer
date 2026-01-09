@@ -45,7 +45,9 @@ rl.on("line", (line) => {
   // COMMAND MODE
   // --------------------
   if (state === "command") {
-    const cmd = line.trim().toUpperCase();
+      const parts = line.trim().split(" ");
+      const cmd = parts[0].toUpperCase();
+      const args = parts.slice(1);
 
     switch (cmd) {
       case "VAR":
@@ -70,11 +72,25 @@ rl.on("line", (line) => {
         }
         console.log("-------------------------\n");
         break;
+      case "DELETE":
+        if (args.length === 0) {
+          console.log(chalk.red("Please specify a variable name to delete. Example: DELETE var1"));
+        } else {
+          const varName = args[0];
+          if (variables[varName] !== undefined) {
+            delete variables[varName];
+            console.log(chalk.green(`Variable "${varName}" deleted.`));
+          } else {
+            console.log(chalk.red(`Variable "${varName}" does not exist.`));
+          }
+      }
+      break;
       case "HELP":
         console.log("\nAvailable Commands:\n");
         console.log(chalk.blue("VAR   ") + "- Adds new variables or overwrites existing ones. Variables are stored in the current session and can be used in subsequent templates.");
         console.log(chalk.blue("TXT   ") + "- Input a multi-line template using {variable_name} or [variable_name]. After Enter twice, replaced template is shown.");
         console.log(chalk.blue("SHOW  ") + "- Displays all currently defined variables in the session.");
+        console.log(chalk.blue("DELETE") + "- Deletes a previously defined variable. Usage: DELETE variable_name");
         console.log(chalk.blue("CLEAR ") + "- Clears the terminal screen and returns to command prompt.");
         console.log(chalk.blue("EXIT  ") + "- Terminates the application gracefully, preserving session data only during runtime.");
         console.log(chalk.blue("HELP  ") + "- Displays this list of available commands and their descriptions.\n");
@@ -88,7 +104,7 @@ rl.on("line", (line) => {
         rl.close();
         break;
       default:
-        if (cmd !== "") console.log(chalk.red("Unknown command. Use VAR / TXT / EXIT / SHOW / HELP / CLEAR"));
+        if (cmd !== "") console.log(chalk.red("Unknown command. Use VAR / TXT / SHOW / DELETE / HELP / CLEAR / EXIT"));
         break;
     }
 
@@ -154,5 +170,5 @@ function processVariableLine(line: string) {
 
 function showCommandPrompt() {
   console.log("\n--- COMMAND MODE ---");
-  console.log(chalk.blue("Enter command: VAR / TXT / EXIT / SHOW / HELP / CLEAR\n"));
+  console.log(chalk.blue("Enter command: VAR / TXT / SHOW / DELETE / HELP / CLEAR / EXIT\n"));
 }

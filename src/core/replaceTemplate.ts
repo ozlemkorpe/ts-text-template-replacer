@@ -7,9 +7,9 @@ export function replaceTemplate(
   let result = template;
 
   for (const [key, value] of Object.entries(variables)) {
-    // {var} veya [var] şeklinde placeholder
+    // {var} [var] 
     const pattern = new RegExp(`[{\\[]\\s*${key}\\s*[}\\]]`, "g");
-    // Değişken değeri yeşil renkte
+    // Green variables
     result = result.replace(pattern, chalk.green(value));
   }
 
