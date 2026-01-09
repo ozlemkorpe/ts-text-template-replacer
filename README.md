@@ -75,8 +75,8 @@ npm run build
 ```
 src/
 ├── core/
-│   └── replaceTemplate.ts   # Core replacement logic
-└── index.ts                 # CLI entry point
+│   └── replaceTemplate.ts  # Core replacement logic
+│   └── index.ts  # CLI entry point
 ```
 
 ---
@@ -86,12 +86,12 @@ src/
 Run the CLI tool:
 
 ```bash
-node dist/index.js
+node dist/core/index.js
 ```
 
 ### Step 1 – Enter variables  
 Enter variables in `key=value` format.  
-When you are done, press **Enter** and then **Ctrl+D**.
+When you are done, press **Enter** twice
 
 ```
 ENV=production
@@ -102,7 +102,7 @@ PORT=8080
 
 ### Step 2 – Enter the template text  
 After variable input ends, enter your template text.  
-Finish again with **Enter + Ctrl+D**.
+Finish again with pressing **Enter** twice.
 
 ```
 echo "Starting server in {{ENV}} mode"
