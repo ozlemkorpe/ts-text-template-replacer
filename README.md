@@ -91,7 +91,7 @@ node dist/index.js
 
 ### Step 1 – Enter variables  
 Enter variables in `key=value` format.  
-When you are done, press **Enter** and then **Ctrl+D**.
+When you are done, press **Enter** twice
 
 ```
 ENV=production
@@ -102,7 +102,7 @@ PORT=8080
 
 ### Step 2 – Enter the template text  
 After variable input ends, enter your template text.  
-Finish again with **Enter + Ctrl+D**.
+Finish again with pressing **Enter** twice.
 
 ```
 echo "Starting server in {{ENV}} mode"
