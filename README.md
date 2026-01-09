@@ -21,26 +21,16 @@ Minimal, fast, and distraction-free.
 
 ## ✨ Features
 
-- Written in **TypeScript**
-- Runs as a **CLI tool**
-- No UI, no dependencies, no overhead
-- Clear separation between core logic and CLI
-- Easy to extend in the future
+* Multi-line template input with `{variable}` or `[variable]` placeholders.
+* Supports adding, updating, showing, and deleting variables in a persistent session.
+* Command-based interface to interactively manage variables and templates.
+* Color-coded CLI output:
 
----
-
-## 🔧 Placeholder Syntax
-
-Placeholders in the text must be written using **curly brackets**:
-
-```
-{{variable_name}}
-```
-
-### Example
-```
-Lorem ipsum dolor sit {{variable}} amet, consectetur adipiscing elit. Vivamus  {{variable2}} eleifend nibh non varius volutpat.
-```
+  * Commands: **blue**
+  * Variables: **green**
+  * Errors/warnings: **red**
+  * Replaced template values: **yellow**
+* Variable format validation (`VAR=value`).
 
 ---
 
@@ -49,73 +39,89 @@ Lorem ipsum dolor sit {{variable}} amet, consectetur adipiscing elit. Vivamus  {
 Clone the repository and install dependencies:
 
 ```bash
+git clone https://github.com/yourusername/ts-text-replacer.git
+cd ts-text-replacer
 npm install
 ```
 
-Build the project:
+Compile TypeScript:
 
 ```bash
 npm run build
 ```
 
----
-
-## 🧠 How It Works
-
-1. The CLI reads variables
-2. Variables are stored as key-value pairs
-3. The CLI then reads the template text 
-4. All `{{key}}` placeholders are replaced with their corresponding values
-5. The final result is printed to the terminal
-
----
-
-## 🗂 Project Structure
-
-```
-src/
-├── core/
-│   └── replaceTemplate.ts  # Core replacement logic
-│   └── index.ts  # CLI entry point
-```
-
----
-
-## ▶️ Usage
-
-Run the CLI tool:
+Run the CLI:
 
 ```bash
 node dist/core/index.js
 ```
 
-### Step 1 – Enter variables  
-Enter variables in `key=value` format.  
-When you are done, press **Enter** twice
+> ⚠️ Note: For correct interactive behavior, run the CLI in a terminal (cmd, PowerShell, or any terminal that supports stdin). Direct double-click execution of the JS/EXE may not work properly.
+
+---
+
+## 🔧 Usage
+
+### Initial Variable Input
+
+When the CLI starts, it prompts for variables:
+
+```
+VAR1=value1
+VAR2=value2
+[Press Enter twice to finish]
+```
+
+* Only valid `VAR=value` format is accepted.
+* Variables can be updated by re-entering them.
+
+---
+
+### ▶️ Commands
+
+Once initial variables are set, the CLI enters **command mode**.
+
+| Command  | Description                                                                                                                |
+| -------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `VAR`    | Adds new variables or updates existing ones. Input ends after pressing Enter twice.                                        |
+| `TXT`    | Input a multi-line template using `{variable}` or `[variable]`. Press Enter twice to show the output with replaced values. |
+| `SHOW`   | Displays all currently defined variables.                                                                                  |
+| `DELETE` | Deletes a previously defined variable. Usage: `DELETE variable_name`                                                       |
+| `CLEAR`  | Clears the terminal screen and returns to command prompt.                                                                  |
+| `HELP`   | Displays this list of available commands and explanations.                                                                 |
+| `EXIT`   | Exits the CLI.                                                                                                             |
+
+---
+
+### Template Example
+
+Input:
+
+```
+echo "Starting server in {ENV} mode"
+node server.js --port={PORT}
+```
+
+Given variables:
 
 ```
 ENV=production
 PORT=8080
 ```
 
----
-
-### Step 2 – Enter the template text  
-After variable input ends, enter your template text.  
-Finish again with pressing **Enter** twice.
-
-```
-echo "Starting server in {{ENV}} mode"
-node server.js --port={{PORT}}
-```
-
----
-
-### Output
+Output:
 
 ```
 echo "Starting server in production mode"
 node server.js --port=8080
 ```
 
+
+### Notes
+
+* Variable names are case-sensitive.
+* Template placeholders must match the variable name exactly (without `{}` or `[]` inside the variable definition).
+* You can continuously add, delete, or update variables without restarting the CLI.
+
 ---
+
