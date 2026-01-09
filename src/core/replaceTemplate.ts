@@ -1,15 +1,13 @@
-export type Variables = Record<string, string>;
-
 export function replaceTemplate(
   template: string,
-  variables: Variables
+  variables: Record<string, string>
 ): string {
-  let output = template;
+  let result = template;
 
   for (const [key, value] of Object.entries(variables)) {
-    const regex = new RegExp(`{{\\s*${key}\\s*}}`, "g");
-    output = output.replace(regex, value);
+    const pattern = new RegExp(`{{\\s*${key}\\s*}}`, "g");
+    result = result.replace(pattern, value);
   }
 
-  return output;
+  return result;
 }
