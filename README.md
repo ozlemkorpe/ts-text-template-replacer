@@ -31,15 +31,15 @@ Minimal, fast, and distraction-free.
 
 ## 🔧 Placeholder Syntax
 
-Placeholders in the text must be written using **square brackets**:
+Placeholders in the text must be written using **curly brackets**:
 
 ```
-[variable_name]
+{{variable_name}}
 ```
 
 ### Example
 ```
-[name] [surname]'s car is red
+Lorem ipsum dolor sit {{variable}} amet, consectetur adipiscing elit. Vivamus  {{variable2}} eleifend nibh non varius volutpat.
 ```
 
 ---
@@ -60,52 +60,12 @@ npm run build
 
 ---
 
-## ▶️ Usage
-
-Run the CLI tool:
-
-```bash
-node dist/index.js
-```
-
-### Step 1 – Enter variables  
-Enter variables in `key=value` format.  
-When you are done, press **Enter** and then **Ctrl+D** (EOF).
-
-```
-name=Ozlem
-surname=Korpe
-env=prod
-```
-
----
-
-### Step 2 – Enter the template text  
-After variable input ends, enter your template text.  
-Finish again with **Enter + Ctrl+D**.
-
-```
-[name] [surname]'s car is red
-Environment: [env]
-```
-
----
-
-### Output
-
-```
-Ozlem Korpe's car is red
-Environment: prod
-```
-
----
-
 ## 🧠 How It Works
 
-1. The CLI reads variables until EOF
+1. The CLI reads variables
 2. Variables are stored as key-value pairs
-3. The CLI then reads the template text until EOF
-4. All `[key]` placeholders are replaced with their corresponding values
+3. The CLI then reads the template text 
+4. All `{{key}}` placeholders are replaced with their corresponding values
 5. The final result is printed to the terminal
 
 ---
@@ -121,17 +81,41 @@ src/
 
 ---
 
-## 🚀 Possible Future Improvements
+## ▶️ Usage
 
-- File input/output support
-- JSON-based variable input
-- CLI flags (`--input`, `--vars`, `--output`)
-- Missing variable warnings
-- Default placeholder values
+Run the CLI tool:
+
+```bash
+node dist/index.js
+```
+
+### Step 1 – Enter variables  
+Enter variables in `key=value` format.  
+When you are done, press **Enter** and then **Ctrl+D**.
+
+```
+ENV=production
+PORT=8080
+```
 
 ---
 
-## 📜 License
+### Step 2 – Enter the template text  
+After variable input ends, enter your template text.  
+Finish again with **Enter + Ctrl+D**.
 
-This project is intended for personal and educational use.  
-Feel free to adapt or extend it for your own workflow.
+```
+echo "Starting server in {{ENV}} mode"
+node server.js --port={{PORT}}
+```
+
+---
+
+### Output
+
+```
+echo "Starting server in production mode"
+node server.js --port=8080
+```
+
+---
