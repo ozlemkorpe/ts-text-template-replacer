@@ -75,8 +75,8 @@ npm run build
 ```
 src/
 ├── core/
-│   └── replaceTemplate.ts   # Core replacement logic
-└── index.ts                 # CLI entry point
+│   └── replaceTemplate.ts  # Core replacement logic
+│   └── index.ts  # CLI entry point
 ```
 
 ---
@@ -86,7 +86,7 @@ src/
 Run the CLI tool:
 
 ```bash
-node dist/index.js
+node dist/core/index.js
 ```
 
 ### Step 1 – Enter variables  
