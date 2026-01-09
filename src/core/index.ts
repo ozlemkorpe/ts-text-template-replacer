@@ -33,7 +33,7 @@ rl.on("line", (line) => {
       state = "command";
       emptyCount = 0;
       console.log("\n--- COMMAND MODE ---");
-      console.log("Enter command: VAR / TXT / EXIT / HELP / CLEAR\n");
+      console.log("Enter command: VAR / TXT / EXIT / SHOW / HELP / CLEAR\n");
       return;
     }
 
@@ -41,7 +41,7 @@ rl.on("line", (line) => {
     return;
   }
 
- // --------------------
+// --------------------
 // COMMAND MODE
 // --------------------
 if (state === "command") {
@@ -59,10 +59,22 @@ if (state === "command") {
       emptyCount = 0;
       console.log("\nEnter template. Press Enter twice when done.");
       break;
+    case "SHOW":
+      console.log("\n--- CURRENT VARIABLES ---");
+      if (Object.keys(variables).length === 0) {
+        console.log("No variables defined yet.");
+      } else {
+        for (const [key, value] of Object.entries(variables)) {
+          console.log(`${key} = ${value}`);
+        }
+      }
+      console.log("-------------------------\n");
+      break;
     case "HELP":
       console.log("\nAvailable Commands:\n");
       console.log("VAR   - Adds new variables or overwrites existing ones. Variables are stored in the current session and can be used in subsequent templates.");
       console.log("TXT   - Allows you to input a multi-line template using {variable_name} or [variable_name] placeholders. After pressing Enter twice, the tool performs replacement using current session variables and outputs the result.");
+      console.log("SHOW  - Displays all currently defined variables in the session.");
       console.log("CLEAR - Clears the terminal screen and returns to command prompt.");
       console.log("EXIT  - Terminates the application gracefully, preserving session data only during runtime.");
       console.log("HELP  - Displays this list of available commands and their descriptions.\n");
@@ -70,14 +82,14 @@ if (state === "command") {
     case "CLEAR":
       console.clear();
       console.log("--- COMMAND MODE ---");
-      console.log("Enter command: VAR / TXT / EXIT / HELP / CLEAR\n");
+      console.log("Enter command: VAR / TXT / EXIT / SHOW / HELP / CLEAR\n");
       break;
     case "EXIT":
       console.log("Exiting...");
       rl.close();
       break;
     default:
-      if (cmd !== "") console.log("Unknown command. Use VAR / TXT / EXIT / HELP / CLEAR");
+      if (cmd !== "") console.log("Unknown command. Use VAR / TXT / EXIT / SHOW / HELP / CLEAR");
       break;
   }
 
@@ -94,7 +106,7 @@ if (state === "command") {
       state = "command";
       emptyCount = 0;
       console.log("\n--- COMMAND MODE ---");
-      console.log("Enter command: VAR / TXT / EXIT / HELP / CLEAR\n");
+      console.log("Enter command: VAR / TXT / EXIT / SHOW / HELP / CLEAR\n");
       return;
     }
 
@@ -116,7 +128,7 @@ if (state === "command") {
       console.log("\n--- OUTPUT ---\n");
       console.log(result);
       console.log("\n--- COMMAND MODE ---");
-      console.log("Enter command: VAR / TXT / EXIT / HELP / CLEAR\n");
+      console.log("Enter command: VAR / TXT / EXIT / SHOW / HELP / CLEAR\n");
       return;
     }
 
